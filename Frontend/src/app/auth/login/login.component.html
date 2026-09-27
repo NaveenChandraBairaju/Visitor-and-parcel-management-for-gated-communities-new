@@ -1,0 +1,82 @@
+<div class="login-page" [ngClass]="'theme-' + role">
+  <div class="login-left">
+    <div class="brand">
+      <mat-icon>{{getBrandIcon()}}</mat-icon>
+      <span>{{getBrandName()}}</span>
+    </div>
+    <h1>{{getWelcomeText()}}</h1>
+    <p>{{getSubText()}}</p>
+
+    <form class="login-form">
+      <div class="input-group">
+        <mat-icon>email</mat-icon>
+        <input type="email" [(ngModel)]="email" name="email" placeholder="Email Address">
+      </div>
+
+      <div class="input-group">
+        <mat-icon>lock</mat-icon>
+        <input [type]="hidePassword ? 'password' : 'text'" [(ngModel)]="password" name="password" placeholder="Password">
+        <button type="button" class="toggle-btn" (click)="hidePassword = !hidePassword">
+          <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </div>
+
+      <div class="role-select">
+        <label>Login As:</label>
+        <div class="role-options">
+          <label class="role-option" [class.selected]="role === 'resident'">
+            <input type="radio" [(ngModel)]="role" name="role" value="resident">
+            <mat-icon>family_restroom</mat-icon>
+            <span>Resident</span>
+          </label>
+          <label class="role-option" [class.selected]="role === 'security'">
+            <input type="radio" [(ngModel)]="role" name="role" value="security">
+            <mat-icon>local_police</mat-icon>
+            <span>Security</span>
+          </label>
+          <label class="role-option" [class.selected]="role === 'admin'">
+            <input type="radio" [(ngModel)]="role" name="role" value="admin">
+            <mat-icon>manage_accounts</mat-icon>
+            <span>Admin</span>
+          </label>
+        </div>
+      </div>
+
+      @if (errorMessage) {
+        <div class="error-message">
+          <mat-icon>error</mat-icon>
+          <span>{{errorMessage}}</span>
+        </div>
+      }
+
+      <button type="button" class="login-btn" (click)="login()">
+        Sign In <mat-icon>arrow_forward</mat-icon>
+      </button>
+
+      <a routerLink="/forgot-password" class="forgot-link">Forgot Password?</a>
+
+      <div class="divider">
+        <span>or</span>
+      </div>
+
+      <div id="google-btn" class="google-btn-container"></div>
+
+      <p class="signup-link">
+        Don't have an account? <a routerLink="/signup">Create one</a>
+      </p>
+    </form>
+  </div>
+
+  <div class="login-right">
+    <div class="illustration">
+      <div class="circle c1"></div>
+      <div class="circle c2"></div>
+      <div class="circle c3"></div>
+      <div class="info-box">
+        <mat-icon>{{getRightIcon()}}</mat-icon>
+        <h3>{{getRightTitle()}}</h3>
+        <p>{{getRightText()}}</p>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="parcel-log-page">
+  <div class="page-header">
+    <div>
+      <h1>Parcel Log</h1>
+      <p>Log new parcel deliveries and track status</p>
+    </div>
+  </div>
+
+  <div class="content-grid">
+    <div class="form-card">
+      <h2><mat-icon>add_box</mat-icon> Log New Parcel</h2>
+      
+      <mat-form-field appearance="outline">
+        <mat-label>Courier Service</mat-label>
+        <mat-select [(ngModel)]="parcel.courier" required>
+          <mat-option value="Amazon">Amazon</mat-option>
+          <mat-option value="Flipkart">Flipkart</mat-option>
+          <mat-option value="Myntra">Myntra</mat-option>
+          <mat-option value="Swiggy">Swiggy Instamart</mat-option>
+          <mat-option value="Meesho">Meesho</mat-option>
+          <mat-option value="Delhivery">Delhivery</mat-option>
+          <mat-option value="BlueDart">BlueDart</mat-option>
+          <mat-option value="Other">Other</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Parcel Name/Description</mat-label>
+        <input matInput [(ngModel)]="parcel.name" placeholder="e.g., Electronics Package" required>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Select Resident</mat-label>
+        <mat-select [(ngModel)]="parcel.residentId" required>
+          @for (resident of residents; track resident.id) {
+            <mat-option [value]="resident.id">{{resident.name}} - {{resident.flat_number}}</mat-option>
+          }
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Additional Notes (Optional)</mat-label>
+        <textarea matInput [(ngModel)]="parcel.description" rows="2" placeholder="Any additional notes"></textarea>
+      </mat-form-field>
+
+      @if (showError && !isFormValid) {
+        <div class="error-message">
+          <mat-icon>warning</mat-icon> Please fill all required fields correctly
+        </div>
+      }
+
+      <div class="form-actions">
+        <button mat-stroked-button (click)="clearForm()">Clear</button>
+        <button mat-raised-button color="primary" (click)="submitParcel()" [disabled]="isLoading">
+          <mat-icon>check</mat-icon> {{ isLoading ? 'Logging...' : 'Log Parcel' }}
+        </button>
+      </div>
+    </div>
+
+    <div class="table-card">
+      <h2><mat-icon>history</mat-icon> Recent Parcels</h2>
+      <table mat-table [dataSource]="recentParcels">
+        <ng-container matColumnDef="courier">
+          <th mat-header-cell *matHeaderCellDef>Parcel</th>
+          <td mat-cell *matCellDef="let p">{{p.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Resident</th>
+          <td mat-cell *matCellDef="let p">{{p.resident_name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="flatNumber">
+          <th mat-header-cell *matHeaderCellDef>Unit</th>
+          <td mat-cell *matCellDef="let p">{{p.flat_number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="receivedTime">
+          <th mat-header-cell *matHeaderCellDef>Check In</th>
+          <td mat-cell *matCellDef="let p">
+            <span class="time-badge">{{p.created_at | date:'short'}}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="deliveryStatus">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let p">
+            <span class="status-badge">{{p.status}}</span>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    </div>
+  </div>
+</div>

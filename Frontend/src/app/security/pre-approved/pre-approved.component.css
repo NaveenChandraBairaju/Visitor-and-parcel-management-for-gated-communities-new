@@ -1,0 +1,173 @@
+.preapproved-page {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.page-header h1 {
+  font-size: 28px;
+  color: #1e3a5f;
+  margin: 0;
+}
+
+.page-header p {
+  font-size: 14px;
+  color: #64748b;
+  margin: 4px 0 0;
+}
+
+.today-count {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #d1fae5;
+  color: #059669;
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+.today-count mat-icon {
+  font-size: 24px;
+  width: 24px;
+  height: 24px;
+}
+
+.table-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.table-card h2 {
+  font-size: 20px;
+  color: #1e3a5f;
+  margin: 0 0 20px;
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-header-cell {
+  font-weight: 600;
+  color: #1e3a5f;
+  background: #f8fafc;
+}
+
+td.mat-cell {
+  padding: 12px 8px;
+}
+
+.visitor-info {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.visitor-info mat-icon {
+  color: #10b981;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.resident-name {
+  display: block;
+  color: #64748b;
+  font-size: 12px;
+}
+
+.date-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.date-badge.today {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.date-badge.upcoming {
+  background: #e0f2fe;
+  color: #0369a1;
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  color: #94a3b8;
+}
+
+.empty-state mat-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  opacity: 0.4;
+  margin-bottom: 16px;
+}
+
+.empty-state p {
+  margin: 0;
+  font-size: 16px;
+}
+
+.status-badge {
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-badge.active,
+.status-badge.pending {
+  background: #fef3c7;
+  color: #d97706;
+}
+
+.status-badge.inside {
+  background: #d1fae5;
+  color: #059669;
+}
+
+.status-badge.exited {
+  background: #e0e7ff;
+  color: #4f46e5;
+}
+
+.completed {
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.history-card {
+  margin-top: 30px;
+}
+
+.history-card h2 {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.history-card h2 mat-icon {
+  color: #64748b;
+}

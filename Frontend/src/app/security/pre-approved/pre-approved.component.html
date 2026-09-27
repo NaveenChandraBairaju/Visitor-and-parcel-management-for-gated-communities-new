@@ -1,0 +1,111 @@
+<div class="preapproved-page">
+  <div class="page-header">
+    <div>
+      <h1>Pre-Approved Visitors</h1>
+      <p>Expected visitors approved by residents</p>
+    </div>
+    <div class="today-count">
+      <mat-icon>verified_user</mat-icon>
+      <span>{{todayCount}} Expected Today</span>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <h2>Expected Visitors List</h2>
+    <table mat-table [dataSource]="preApprovedList">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Visitor Name</th>
+        <td mat-cell *matCellDef="let v">{{v.name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="phone">
+        <th mat-header-cell *matHeaderCellDef>Phone</th>
+        <td mat-cell *matCellDef="let v">{{v.phone}}</td>
+      </ng-container>
+      <ng-container matColumnDef="flatNumber">
+        <th mat-header-cell *matHeaderCellDef>Visiting Flat</th>
+        <td mat-cell *matCellDef="let v">
+          <div>
+            <strong>{{v.flat_number}}</strong>
+            <small class="resident-name">{{v.resident_name}}</small>
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="purpose">
+        <th mat-header-cell *matHeaderCellDef>Purpose</th>
+        <td mat-cell *matCellDef="let v">{{v.purpose}}</td>
+      </ng-container>
+      <ng-container matColumnDef="expectedDate">
+        <th mat-header-cell *matHeaderCellDef>Expected</th>
+        <td mat-cell *matCellDef="let v">
+          <span class="date-badge">{{v.expected_date | date:'mediumDate'}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let v">
+          <span class="status-badge" [ngClass]="v.status?.toLowerCase()">{{v.status}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let v">
+          @if (v.status === 'Active' || v.status === 'Pending' || !v.status) {
+            <button mat-raised-button color="primary" (click)="allowEntry(v)">
+              <mat-icon>login</mat-icon> Allow Entry
+            </button>
+          } @else if (v.status === 'Inside') {
+            <button mat-raised-button color="warn" (click)="markExit(v)">
+              <mat-icon>logout</mat-icon> Mark Exit
+            </button>
+          } @else {
+            <span class="completed">Completed</span>
+          }
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (preApprovedList.length === 0) {
+      <div class="empty-state">
+        <p>No pre-approved visitors at the moment</p>
+      </div>
+    }
+  </div>
+
+  @if (historyList.length > 0) {
+    <div class="table-card history-card">
+      <h2><mat-icon>history</mat-icon> Recent History</h2>
+      <table mat-table [dataSource]="historyList">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Visitor Name</th>
+          <td mat-cell *matCellDef="let v">{{v.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef>Phone</th>
+          <td mat-cell *matCellDef="let v">{{v.phone}}</td>
+        </ng-container>
+        <ng-container matColumnDef="flatNumber">
+          <th mat-header-cell *matHeaderCellDef>Flat</th>
+          <td mat-cell *matCellDef="let v">{{v.flat_number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="purpose">
+          <th mat-header-cell *matHeaderCellDef>Purpose</th>
+          <td mat-cell *matCellDef="let v">{{v.purpose}}</td>
+        </ng-container>
+        <ng-container matColumnDef="expectedDate">
+          <th mat-header-cell *matHeaderCellDef>Date</th>
+          <td mat-cell *matCellDef="let v">{{v.expected_date | date:'mediumDate'}}</td>
+        </ng-container>
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef>Status</th>
+          <td mat-cell *matCellDef="let v">
+            <span class="status-badge exited">{{v.status}}</span>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="historyColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: historyColumns;"></tr>
+      </table>
+    </div>
+  }
+</div>

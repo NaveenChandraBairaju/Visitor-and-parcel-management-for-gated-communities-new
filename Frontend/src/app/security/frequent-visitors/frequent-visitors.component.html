@@ -1,0 +1,56 @@
+<div class="frequent-visitors-page">
+  <div class="page-header">
+    <h1>Frequent Visitors</h1>
+    <p>Search and check-in regular visitors</p>
+  </div>
+
+  <div class="search-card">
+    <mat-form-field appearance="outline">
+      <mat-label>Search by name or phone</mat-label>
+      <input matInput [(ngModel)]="searchQuery" (input)="onSearch()" placeholder="Enter name or phone number">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+
+  <div class="table-card">
+    <h2><mat-icon>people</mat-icon> All Frequent Visitors</h2>
+
+    @if (filteredVisitors.length === 0) {
+      <div class="empty-state">
+        <mat-icon>search_off</mat-icon>
+        <p>No frequent visitors found</p>
+      </div>
+    } @else {
+      <table mat-table [dataSource]="filteredVisitors">
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let v">{{v.name}}</td>
+        </ng-container>
+        <ng-container matColumnDef="phone">
+          <th mat-header-cell *matHeaderCellDef>Phone</th>
+          <td mat-cell *matCellDef="let v">{{v.phone}}</td>
+        </ng-container>
+        <ng-container matColumnDef="relationship">
+          <th mat-header-cell *matHeaderCellDef>Relationship</th>
+          <td mat-cell *matCellDef="let v">
+            <span class="relationship-badge">{{v.relationship}}</span>
+          </td>
+        </ng-container>
+        <ng-container matColumnDef="resident">
+          <th mat-header-cell *matHeaderCellDef>Resident</th>
+          <td mat-cell *matCellDef="let v">{{v.resident_name}} - {{v.flat_number}}</td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>Actions</th>
+          <td mat-cell *matCellDef="let v">
+            <button mat-raised-button color="primary" (click)="checkIn(v)">
+              <mat-icon>login</mat-icon> Check In
+            </button>
+          </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+    }
+  </div>
+</div>

@@ -1,0 +1,126 @@
+<div class="resident-home">
+  <div class="welcome-section">
+    <div class="welcome-text">
+      <h1>Welcome back, {{userName}}! 👋</h1>
+      <p>Manage your visitors and parcels from your personal dashboard</p>
+    </div>
+    <div class="welcome-graphic">
+      <mat-icon>home</mat-icon>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card pending">
+      <mat-icon>hourglass_empty</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{pendingVisitors}}</span>
+        <span class="stat-label">Pending Approvals</span>
+      </div>
+    </div>
+    <div class="stat-card parcels">
+      <mat-icon>inventory_2</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{pendingParcels}}</span>
+        <span class="stat-label">Parcels to Collect</span>
+      </div>
+    </div>
+    <div class="stat-card today">
+      <mat-icon>apartment</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{residentFlat || '-'}}</span>
+        <span class="stat-label">Your Flat</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Quick Actions</h2>
+  <div class="actions-grid">
+    <a routerLink="/resident/visitor-approval" class="action-card">
+      <div class="action-icon visitor-icon">
+        <mat-icon>how_to_reg</mat-icon>
+      </div>
+      <h3>Visitor Approval</h3>
+      <p>Approve or reject visitors waiting at the gate</p>
+      <span class="action-btn">Go to Approvals →</span>
+    </a>
+    <a routerLink="/resident/parcel-tracking" class="action-card">
+      <div class="action-icon parcel-icon">
+        <mat-icon>local_shipping</mat-icon>
+      </div>
+      <h3>Parcel Tracking</h3>
+      <p>Track and acknowledge your parcel deliveries</p>
+      <span class="action-btn">View Parcels →</span>
+    </a>
+    <a routerLink="/resident/pre-approve" class="action-card">
+      <div class="action-icon preapprove-icon">
+        <mat-icon>event_available</mat-icon>
+      </div>
+      <h3>Pre-Approve Visitor</h3>
+      <p>Add expected guests for quick entry</p>
+      <span class="action-btn">Pre-Approve →</span>
+    </a>
+  </div>
+
+  @if (announcements.length > 0) {
+    <h2><mat-icon>campaign</mat-icon> Announcements</h2>
+    <div class="announcements-section">
+      @for (announcement of announcements; track announcement.id) {
+        <div class="announcement-card" [ngClass]="'priority-' + announcement.priority">
+          <div class="announcement-header">
+            <mat-icon class="priority-icon">
+              {{announcement.priority === 'high' ? 'error' : announcement.priority === 'normal' ? 'info' : 'check_circle'}}
+            </mat-icon>
+            <h3>{{announcement.title}}</h3>
+            @if (announcement.priority === 'high') {
+              <span class="priority-badge high">Urgent</span>
+            }
+          </div>
+          <p class="announcement-message">{{announcement.message}}</p>
+          <div class="announcement-info">
+            <span><mat-icon>calendar_today</mat-icon> {{announcement.created_at | date:'short'}}</span>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (recentVisitors.length > 0 || recentParcels.length > 0) {
+    <h2><mat-icon>history</mat-icon> Recent History</h2>
+    <div class="history-grid">
+      @if (recentVisitors.length > 0) {
+        <div class="history-card">
+          <h3><mat-icon>people</mat-icon> Recent Visitors</h3>
+          <div class="history-list">
+            @for (item of recentVisitors; track item.id) {
+              <div class="history-item">
+                <mat-icon>person</mat-icon>
+                <div class="history-info">
+                  <span class="history-name">{{item.name}}</span>
+                  <span class="history-detail">{{item.purpose}}</span>
+                </div>
+                <span class="history-time">{{item.created_at | date:'short'}}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+      @if (recentParcels.length > 0) {
+        <div class="history-card">
+          <h3><mat-icon>inventory_2</mat-icon> Recent Parcels</h3>
+          <div class="history-list">
+            @for (item of recentParcels; track item.id) {
+              <div class="history-item">
+                <mat-icon>local_shipping</mat-icon>
+                <div class="history-info">
+                  <span class="history-name">{{item.name}}</span>
+                  <span class="history-detail">{{item.description || 'No description'}}</span>
+                </div>
+                <span class="history-time">{{item.created_at | date:'short'}}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

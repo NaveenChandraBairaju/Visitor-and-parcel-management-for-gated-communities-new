@@ -1,0 +1,124 @@
+<div class="auth-container">
+  <div class="auth-banner">
+    <div class="banner-content">
+      <h2>Join Our Community</h2>
+      <p>Register to manage visitors and parcels efficiently</p>
+      <div class="features">
+        <div class="feature">
+          <mat-icon>people</mat-icon>
+          <span>Visitor Management</span>
+        </div>
+        <div class="feature">
+          <mat-icon>inventory_2</mat-icon>
+          <span>Parcel Tracking</span>
+        </div>
+        <div class="feature">
+          <mat-icon>security</mat-icon>
+          <span>Enhanced Security</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-card">
+    <div class="auth-header">
+      <div class="logo">
+        <mat-icon>person_add</mat-icon>
+      </div>
+      <h1>Create Account</h1>
+      <p>Register for Visitor & Parcel Management System</p>
+    </div>
+
+    <form class="auth-form">
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Full Name</mat-label>
+          <input matInput [(ngModel)]="fullName" name="fullName" required>
+          <mat-icon matPrefix>person</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Email</mat-label>
+          <input matInput [(ngModel)]="email" name="email" type="email" required>
+          <mat-icon matPrefix>email</mat-icon>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Phone Number</mat-label>
+          <input matInput [(ngModel)]="phone" name="phone" (input)="onPhoneInput($event)" maxlength="10" required>
+          <mat-icon matPrefix>phone</mat-icon>
+          @if (phone && phone.length > 0 && phone.length < 10) {
+            <mat-hint class="error-hint">Phone must be 10 digits ({{phone.length}}/10)</mat-hint>
+          }
+        </mat-form-field>
+
+        @if (role === 'resident') {
+          <mat-form-field appearance="outline">
+            <mat-label>Flat/Unit Number</mat-label>
+            <input matInput [(ngModel)]="flatNumber" name="flatNumber" required>
+            <mat-icon matPrefix>home</mat-icon>
+          </mat-form-field>
+        }
+      </div>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Role</mat-label>
+        <mat-select [(ngModel)]="role" name="role" required>
+          <mat-option value="resident">Resident</mat-option>
+          <mat-option value="security">Security Guard</mat-option>
+        </mat-select>
+        <mat-icon matPrefix>badge</mat-icon>
+      </mat-form-field>
+
+      <div class="form-row">
+        <mat-form-field appearance="outline">
+          <mat-label>Password</mat-label>
+          <input matInput [(ngModel)]="password" name="password" [type]="hidePassword ? 'password' : 'text'" required minlength="6">
+          <mat-icon matPrefix>lock</mat-icon>
+          <button mat-icon-button matSuffix (click)="hidePassword = !hidePassword" type="button">
+            <mat-icon>{{hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          @if (password && password.length > 0 && password.length < 6) {
+            <mat-hint class="error-hint">Password must be at least 6 characters</mat-hint>
+          }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Confirm Password</mat-label>
+          <input matInput [(ngModel)]="confirmPassword" name="confirmPassword" [type]="hideConfirmPassword ? 'password' : 'text'" required>
+          <mat-icon matPrefix>lock_outline</mat-icon>
+          <button mat-icon-button matSuffix (click)="hideConfirmPassword = !hideConfirmPassword" type="button">
+            <mat-icon>{{hideConfirmPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+          </button>
+          @if (confirmPassword && password !== confirmPassword) {
+            <mat-hint class="error-hint">Passwords do not match</mat-hint>
+          }
+        </mat-form-field>
+      </div>
+
+      <mat-checkbox class="terms-checkbox" [(ngModel)]="agreeTerms" name="agreeTerms">
+        I agree to the Terms & Conditions
+      </mat-checkbox>
+
+      @if (showError && errorMessage) {
+        <div class="error-message">
+          <mat-icon>warning</mat-icon> {{errorMessage}}
+        </div>
+      }
+
+      <button mat-raised-button color="primary" class="auth-btn" (click)="signup()" [disabled]="!isFormValid || isLoading">
+        {{ isLoading ? 'Creating Account...' : 'Create Account' }}
+      </button>
+
+      <div class="divider">
+        <span>OR</span>
+      </div>
+
+      <p class="switch-auth">
+        Already have an account? <a routerLink="/login">Sign In</a>
+      </p>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+<div class="layout-container">
+  <nav class="top-navbar admin-nav">
+    <div class="nav-left">
+      <div class="brand">
+        <mat-icon>manage_accounts</mat-icon>
+        <span>Admin Portal</span>
+      </div>
+    </div>
+    <div class="nav-center">
+      <a routerLink="/admin/dashboard" routerLinkActive="active" mat-button>
+        <mat-icon>dashboard</mat-icon>
+        Dashboard
+      </a>
+      <a routerLink="/admin/users" routerLinkActive="active" mat-button>
+        <mat-icon>people</mat-icon>
+        Users
+      </a>
+      <a routerLink="/admin/visitors" routerLinkActive="active" mat-button>
+        <mat-icon>groups</mat-icon>
+        All Visitors
+      </a>
+      <a routerLink="/admin/parcels" routerLinkActive="active" mat-button>
+        <mat-icon>inventory_2</mat-icon>
+        All Parcels
+      </a>
+      <a routerLink="/admin/pre-approved" routerLinkActive="active" mat-button>
+        <mat-icon>verified_user</mat-icon>
+        Pre-Approved
+      </a>
+      <a routerLink="/admin/announcements" routerLinkActive="active" mat-button>
+        <mat-icon>campaign</mat-icon>
+        Announcements
+      </a>
+      <a routerLink="/admin/frequent-visitors" routerLinkActive="active" mat-button>
+        <mat-icon>people_outline</mat-icon>
+        Frequent Visitors
+      </a>
+    </div>
+    <div class="nav-right">
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>Logout
+        </button>
+      </mat-menu>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

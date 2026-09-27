@@ -1,0 +1,115 @@
+<div class="announcements-page">
+  <div class="page-header">
+    <h1><mat-icon>campaign</mat-icon> Community Announcements</h1>
+    <p>Create and manage notices for residents and security personnel</p>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card">
+      <div class="icon-wrap purple">
+        <mat-icon>notifications_active</mat-icon>
+      </div>
+      <div class="stat-info">
+        <span class="stat-num">{{totalCount}}</span>
+        <span class="stat-label">Total Announcements</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-grid">
+    <div class="form-section">
+      <div class="section-title">
+        <mat-icon>add_circle</mat-icon>
+        <span>Create New Announcement</span>
+      </div>
+      
+      <div class="form-body">
+        <mat-form-field appearance="outline">
+          <mat-label>Title</mat-label>
+          <input matInput [(ngModel)]="announcement.title" placeholder="Enter announcement title">
+          <mat-icon matPrefix>title</mat-icon>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Message</mat-label>
+          <textarea matInput [(ngModel)]="announcement.message" rows="4" placeholder="Write your announcement message here..."></textarea>
+        </mat-form-field>
+
+        <div class="form-row">
+          <mat-form-field appearance="outline">
+            <mat-label>Priority</mat-label>
+            <mat-select [(ngModel)]="announcement.priority">
+              <mat-option value="low">Low</mat-option>
+              <mat-option value="normal">Normal</mat-option>
+              <mat-option value="high">High</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline">
+            <mat-label>Audience</mat-label>
+            <mat-select [(ngModel)]="announcement.audience">
+              <mat-option value="All">Everyone</mat-option>
+              <mat-option value="Residents">Residents Only</mat-option>
+              <mat-option value="Security">Security Only</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        @if (showError && !isFormValid) {
+          <div class="error-msg">
+            <mat-icon>error</mat-icon> Please fill in both title and message
+          </div>
+        }
+
+        <div class="form-actions">
+          <button mat-stroked-button (click)="clearForm()">
+            <mat-icon>clear</mat-icon> Clear
+          </button>
+          <button mat-raised-button color="primary" (click)="submitAnnouncement()" [disabled]="isLoading">
+            <mat-icon>{{ isLoading ? 'hourglass_empty' : 'send' }}</mat-icon>
+            {{ isLoading ? 'Publishing...' : 'Publish' }}
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="list-section">
+      <div class="section-title">
+        <mat-icon>format_list_bulleted</mat-icon>
+        <span>All Announcements ({{announcements.length}})</span>
+      </div>
+
+      @if (announcements.length === 0) {
+        <div class="empty-state">
+          <mat-icon>inbox</mat-icon>
+          <p>No announcements yet. Create your first one!</p>
+        </div>
+      } @else {
+        <div class="announcements-list">
+          @for (item of announcements; track item.id) {
+            <div class="card" [class]="'priority-' + item.priority">
+              <div class="card-header">
+                <span class="badge" [class]="'badge-' + item.priority">{{item.priority}}</span>
+                <button class="delete-btn" (click)="deleteAnnouncement(item)" title="Delete">
+                  <mat-icon>delete_outline</mat-icon>
+                </button>
+              </div>
+              <h3>{{item.title}}</h3>
+              <p>{{item.message}}</p>
+              <div class="card-info">
+                <span>
+                  <mat-icon>groups</mat-icon>
+                  {{item.audience === 'All' ? 'Everyone' : item.audience}}
+                </span>
+                <span>
+                  <mat-icon>schedule</mat-icon>
+                  {{item.created_at | date:'MMM d, y, h:mm a'}}
+                </span>
+              </div>
+            </div>
+          }
+        </div>
+      }
+    </div>
+  </div>
+</div>

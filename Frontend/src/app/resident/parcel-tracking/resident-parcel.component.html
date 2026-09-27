@@ -1,0 +1,111 @@
+<div class="parcel-page">
+  <div class="page-header">
+    <div>
+      <h1>Parcel Tracking</h1>
+      <p>Track and manage your parcel deliveries</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card pending">
+      <mat-icon>hourglass_empty</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{pendingCount}}</span>
+        <span class="stat-label">Received</span>
+      </div>
+    </div>
+    <div class="stat-card approved">
+      <mat-icon>check_circle</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{acknowledgedCount}}</span>
+        <span class="stat-label">Approved</span>
+      </div>
+    </div>
+    <div class="stat-card entered">
+      <mat-icon>login</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{enteredCount}}</span>
+        <span class="stat-label">Inside</span>
+      </div>
+    </div>
+    <div class="stat-card exited">
+      <mat-icon>logout</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{exitedCount}}</span>
+        <span class="stat-label">Collected</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <h2>My Parcels</h2>
+    <table mat-table [dataSource]="parcels">
+      <ng-container matColumnDef="courier">
+        <th mat-header-cell *matHeaderCellDef>Parcel</th>
+        <td mat-cell *matCellDef="let p">{{p.name}}</td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let p">{{p.description || '-'}}</td>
+      </ng-container>
+      <ng-container matColumnDef="receivedDate">
+        <th mat-header-cell *matHeaderCellDef>Check In</th>
+        <td mat-cell *matCellDef="let p">{{p.created_at | date:'short'}}</td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Status</th>
+        <td mat-cell *matCellDef="let p">
+          <span class="status-badge" [ngClass]="'status-' + p.status.toLowerCase()">{{p.status}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let p">
+          @if (p.status === 'Received') {
+            <button mat-raised-button color="primary" (click)="acknowledgeParcel(p)">
+              <mat-icon>check</mat-icon> Approve
+            </button>
+          }
+          @if (p.status === 'Acknowledged') {
+            <span class="waiting-text"><mat-icon>schedule</mat-icon> Waiting for Entry</span>
+          }
+          @if (p.status === 'Entered') {
+            <button mat-raised-button color="accent" (click)="collectParcel(p)">
+              <mat-icon>inventory</mat-icon> Collect Now
+            </button>
+          }
+          @if (p.status === 'Exited' || p.status === 'Collected') {
+            <span class="collected-text"><mat-icon>verified</mat-icon> Collected</span>
+          }
+        </td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (parcels.length === 0) {
+      <div class="empty-state">
+        <mat-icon>inventory_2</mat-icon>
+        <p>No parcels at the moment</p>
+      </div>
+    }
+  </div>
+
+  @if (recentHistory.length > 0) {
+    <div class="history-section">
+      <h2><mat-icon>history</mat-icon> Recent History</h2>
+      <div class="history-list">
+        @for (item of recentHistory; track item.id) {
+          <div class="history-item">
+            <mat-icon>inventory_2</mat-icon>
+            <div class="history-info">
+              <span class="history-name">{{item.name}}</span>
+              <span class="history-detail">{{item.description || 'No description'}}</span>
+            </div>
+            <span class="history-time">{{item.created_at | date:'short'}}</span>
+          </div>
+        }
+      </div>
+    </div>
+  }
+</div>

@@ -1,0 +1,115 @@
+<div class="admin-dashboard">
+  <div class="welcome-section">
+    <div class="welcome-text">
+      <h1>Welcome, {{adminName}}! 🏢</h1>
+      <p>Manage your community from the admin control center</p>
+    </div>
+    <div class="welcome-graphic">
+      <mat-icon>admin_panel_settings</mat-icon>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card residents">
+      <mat-icon>apartment</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{totalResidents}}</span>
+        <span class="stat-label">Total Residents</span>
+      </div>
+    </div>
+    <div class="stat-card visitors">
+      <mat-icon>groups</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{totalVisitors}}</span>
+        <span class="stat-label">Total Visitors</span>
+      </div>
+    </div>
+    <div class="stat-card parcels">
+      <mat-icon>inventory_2</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{totalParcels}}</span>
+        <span class="stat-label">Total Parcels</span>
+      </div>
+    </div>
+    <div class="stat-card guards">
+      <mat-icon>security</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{activeGuards}}</span>
+        <span class="stat-label">Active Guards</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Quick Actions</h2>
+  <div class="actions-grid">
+    <a routerLink="/admin/users" class="action-card">
+      <div class="action-icon users-icon">
+        <mat-icon>manage_accounts</mat-icon>
+      </div>
+      <h3>Manage Users</h3>
+      <p>Add, edit, or remove residents and guards</p>
+      <span class="action-btn">Manage Users →</span>
+    </a>
+    <a routerLink="/admin/visitors" class="action-card">
+      <div class="action-icon visitor-icon">
+        <mat-icon>groups</mat-icon>
+      </div>
+      <h3>All Visitors</h3>
+      <p>View complete visitor records</p>
+      <span class="action-btn">View Visitors →</span>
+    </a>
+    <a routerLink="/admin/parcels" class="action-card">
+      <div class="action-icon parcel-icon">
+        <mat-icon>local_shipping</mat-icon>
+      </div>
+      <h3>All Parcels</h3>
+      <p>Track all parcel deliveries</p>
+      <span class="action-btn">View Parcels →</span>
+    </a>
+    <a routerLink="/admin/announcements" class="action-card">
+      <div class="action-icon announce-icon">
+        <mat-icon>campaign</mat-icon>
+      </div>
+      <h3>Announcements</h3>
+      <p>Send notices to community</p>
+      <span class="action-btn">Create →</span>
+    </a>
+  </div>
+
+  <div class="bottom-section">
+    <div class="activity-section">
+      <h2>Recent Activity</h2>
+      <div class="activity-list">
+        @if (recentVisitors.length === 0 && recentParcels.length === 0) {
+          <div class="empty-activity">
+            <mat-icon>inbox</mat-icon>
+            <p>No recent activity</p>
+          </div>
+        } @else {
+          @for (visitor of recentVisitors; track visitor.id) {
+            <div class="activity-item">
+              <div class="activity-icon visitor">
+                <mat-icon>person</mat-icon>
+              </div>
+              <div class="activity-info">
+                <span class="activity-title">{{visitor.name}} - Flat {{visitor.flat_number}}</span>
+                <span class="activity-time">{{visitor.created_at | date:'short'}}</span>
+              </div>
+            </div>
+          }
+          @for (parcel of recentParcels; track parcel.id) {
+            <div class="activity-item">
+              <div class="activity-icon parcel">
+                <mat-icon>inventory_2</mat-icon>
+              </div>
+              <div class="activity-info">
+                <span class="activity-title">{{parcel.name}} - Flat {{parcel.flat_number}}</span>
+                <span class="activity-time">{{parcel.created_at | date:'short'}}</span>
+              </div>
+            </div>
+          }
+        }
+      </div>
+    </div>
+  </div>
+</div>

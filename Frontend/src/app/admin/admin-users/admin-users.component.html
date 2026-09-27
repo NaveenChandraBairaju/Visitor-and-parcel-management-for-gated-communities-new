@@ -1,0 +1,100 @@
+<div class="users-page">
+  <div class="page-header">
+    <div>
+      <h1>User Management</h1>
+      <p>View all registered users</p>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card residents">
+      <mat-icon>apartment</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{residentCount}}</span>
+        <span class="stat-label">Residents</span>
+      </div>
+    </div>
+    <div class="stat-card security">
+      <mat-icon>security</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{securityCount}}</span>
+        <span class="stat-label">Security Guards</span>
+      </div>
+    </div>
+    <div class="stat-card admins">
+      <mat-icon>admin_panel_settings</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{adminCount}}</span>
+        <span class="stat-label">Admins</span>
+      </div>
+    </div>
+    <div class="stat-card active">
+      <mat-icon>people</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{totalCount}}</span>
+        <span class="stat-label">Total Users</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="table-card">
+    <div class="table-header">
+      <h2>All Users</h2>
+      <div class="filters">
+        <mat-form-field appearance="outline">
+          <mat-label>Search</mat-label>
+          <input matInput [(ngModel)]="searchQuery" placeholder="Search by name or email">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Filter by Role</mat-label>
+          <mat-select [(ngModel)]="filterRole">
+            <mat-option value="">All Roles</mat-option>
+            <mat-option value="resident">Resident</mat-option>
+            <mat-option value="security">Security</mat-option>
+            <mat-option value="admin">Admin</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <table mat-table [dataSource]="filteredUsers">
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let u">
+          <div class="user-info">
+            <mat-icon class="user-avatar">account_circle</mat-icon>
+            <span>{{u.name}}</span>
+          </div>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="email">
+        <th mat-header-cell *matHeaderCellDef>Email</th>
+        <td mat-cell *matCellDef="let u">{{u.email}}</td>
+      </ng-container>
+      <ng-container matColumnDef="unit">
+        <th mat-header-cell *matHeaderCellDef>Unit/Location</th>
+        <td mat-cell *matCellDef="let u">{{u.flat_number || '-'}}</td>
+      </ng-container>
+      <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef>Role</th>
+        <td mat-cell *matCellDef="let u">
+          <span class="role-badge" [ngClass]="'role-' + u.role">{{u.role}}</span>
+        </td>
+      </ng-container>
+      <ng-container matColumnDef="created">
+        <th mat-header-cell *matHeaderCellDef>Joined</th>
+        <td mat-cell *matCellDef="let u">{{u.created_at | date:'mediumDate'}}</td>
+      </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+
+    @if (filteredUsers.length === 0) {
+      <div class="empty-state">
+        <mat-icon>people_outline</mat-icon>
+        <p>No users found</p>
+      </div>
+    }
+  </div>
+</div>

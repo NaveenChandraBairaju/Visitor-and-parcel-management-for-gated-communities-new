@@ -1,0 +1,70 @@
+<div class="layout-container">
+  <nav class="top-navbar resident-nav">
+    <div class="nav-left">
+      <div class="brand">
+        <mat-icon>family_restroom</mat-icon>
+        <span>Resident Portal</span>
+      </div>
+    </div>
+    <div class="nav-center">
+      <a routerLink="/resident/home" routerLinkActive="active" mat-button>
+        <mat-icon>dashboard</mat-icon>
+        Dashboard
+      </a>
+      <a routerLink="/resident/visitor-approval" routerLinkActive="active" mat-button>
+        <mat-icon>how_to_reg</mat-icon>
+        Visitor Approval
+      </a>
+      <a routerLink="/resident/parcel-tracking" routerLinkActive="active" mat-button>
+        <mat-icon>inventory_2</mat-icon>
+        My Parcels
+      </a>
+      <a routerLink="/resident/pre-approve" routerLinkActive="active" mat-button>
+        <mat-icon>event_available</mat-icon>
+        Pre-Approve
+      </a>
+      <a routerLink="/resident/frequent-visitors" routerLinkActive="active" mat-button>
+        <mat-icon>people</mat-icon>
+        Frequent Visitors
+      </a>
+    </div>
+    <div class="nav-right">
+      <button mat-icon-button class="notification-btn" [matMenuTriggerFor]="notificationMenu">
+        <mat-icon [matBadge]="notificationCount" [matBadgeHidden]="notificationCount === 0" matBadgeColor="warn" matBadgeSize="small">notifications</mat-icon>
+      </button>
+      <mat-menu #notificationMenu="matMenu" class="notification-menu">
+        <div class="notification-header">
+          <span>Notifications</span>
+        </div>
+        @if (notifications.length === 0) {
+          <div class="no-notifications">
+            <mat-icon>notifications_off</mat-icon>
+            <p>No new notifications</p>
+          </div>
+        } @else {
+          @for (notif of notifications; track notif.id) {
+            <button mat-menu-item class="notification-item" (click)="goToNotification(notif)">
+              <mat-icon [ngClass]="notif.type">{{notif.type === 'visitor' ? 'person' : 'inventory_2'}}</mat-icon>
+              <div class="notif-content">
+                <span class="notif-title">{{notif.title}}</span>
+                <span class="notif-time">{{notif.time}}</span>
+              </div>
+            </button>
+          }
+        }
+      </mat-menu>
+      <button mat-icon-button [matMenuTriggerFor]="userMenu">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+      <mat-menu #userMenu="matMenu">
+        <button mat-menu-item (click)="logout()">
+          <mat-icon>logout</mat-icon>Logout
+        </button>
+      </mat-menu>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

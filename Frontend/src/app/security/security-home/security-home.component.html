@@ -1,0 +1,142 @@
+<div class="security-home">
+  <div class="welcome-section">
+    <div class="welcome-text">
+      <h1>Welcome, {{userName}}! 🛡️</h1>
+      <p>Manage visitor entries and parcel deliveries at the gate</p>
+    </div>
+    <div class="welcome-graphic">
+      <mat-icon>security</mat-icon>
+    </div>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat-card visitors">
+      <mat-icon>groups</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{totalVisitors}}</span>
+        <span class="stat-label">Total Visitors</span>
+      </div>
+    </div>
+    <div class="stat-card parcels">
+      <mat-icon>inventory_2</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{totalParcels}}</span>
+        <span class="stat-label">Total Parcels</span>
+      </div>
+    </div>
+    <div class="stat-card pending">
+      <mat-icon>pending_actions</mat-icon>
+      <div class="stat-info">
+        <span class="stat-num">{{pendingApprovals}}</span>
+        <span class="stat-label">Pending Approvals</span>
+      </div>
+    </div>
+  </div>
+
+  <h2>Quick Actions</h2>
+  <div class="actions-grid">
+    <a routerLink="/security/visitor-log" class="action-card">
+      <div class="action-icon visitor-icon">
+        <mat-icon>person_add</mat-icon>
+      </div>
+      <h3>Log New Visitor</h3>
+      <p>Register a new visitor at the gate</p>
+      <span class="action-btn">Add Visitor →</span>
+    </a>
+    <a routerLink="/security/parcel-log" class="action-card">
+      <div class="action-icon parcel-icon">
+        <mat-icon>add_box</mat-icon>
+      </div>
+      <h3>Log New Parcel</h3>
+      <p>Record a new parcel delivery</p>
+      <span class="action-btn">Add Parcel →</span>
+    </a>
+    <a routerLink="/security/all-visitors" class="action-card">
+      <div class="action-icon allvisitors-icon">
+        <mat-icon>groups</mat-icon>
+      </div>
+      <h3>All Visitors</h3>
+      <p>View all visitors and manage entry/exit</p>
+      <span class="action-btn">View All →</span>
+    </a>
+    <a routerLink="/security/all-parcels" class="action-card">
+      <div class="action-icon allparcels-icon">
+        <mat-icon>inventory_2</mat-icon>
+      </div>
+      <h3>All Parcels</h3>
+      <p>View all parcels and track deliveries</p>
+      <span class="action-btn">View All →</span>
+    </a>
+    <a routerLink="/security/pre-approved" class="action-card">
+      <div class="action-icon preapproved-icon">
+        <mat-icon>verified_user</mat-icon>
+      </div>
+      <h3>Pre-Approved</h3>
+      <p>View expected visitors from residents</p>
+      <span class="action-btn">View List →</span>
+    </a>
+  </div>
+
+  @if (announcements.length > 0) {
+    <h2><mat-icon>campaign</mat-icon> Announcements</h2>
+    <div class="announcements-section">
+      @for (announcement of announcements; track announcement.id) {
+        <div class="announcement-card" [ngClass]="'priority-' + announcement.priority">
+          <div class="announcement-header">
+            <mat-icon class="priority-icon">
+              {{announcement.priority === 'high' ? 'error' : announcement.priority === 'normal' ? 'info' : 'check_circle'}}
+            </mat-icon>
+            <h3>{{announcement.title}}</h3>
+            @if (announcement.priority === 'high') {
+              <span class="priority-badge high">Urgent</span>
+            }
+          </div>
+          <p class="announcement-message">{{announcement.message}}</p>
+          <div class="announcement-info">
+            <span><mat-icon>calendar_today</mat-icon> {{announcement.created_at | date:'short'}}</span>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  @if (recentVisitors.length > 0 || recentParcels.length > 0) {
+    <h2><mat-icon>history</mat-icon> Recent History</h2>
+    <div class="history-grid">
+      @if (recentVisitors.length > 0) {
+        <div class="history-card">
+          <h3><mat-icon>people</mat-icon> Recent Visitors</h3>
+          <div class="history-list">
+            @for (item of recentVisitors; track item.id) {
+              <div class="history-item">
+                <mat-icon>person</mat-icon>
+                <div class="history-info">
+                  <span class="history-name">{{item.name}}</span>
+                  <span class="history-detail">Flat {{item.flat_number}}</span>
+                </div>
+                <span class="history-time">{{item.created_at | date:'short'}}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+      @if (recentParcels.length > 0) {
+        <div class="history-card">
+          <h3><mat-icon>inventory_2</mat-icon> Recent Parcels</h3>
+          <div class="history-list">
+            @for (item of recentParcels; track item.id) {
+              <div class="history-item">
+                <mat-icon>local_shipping</mat-icon>
+                <div class="history-info">
+                  <span class="history-name">{{item.name}}</span>
+                  <span class="history-detail">Flat {{item.flat_number}}</span>
+                </div>
+                <span class="history-time">{{item.created_at | date:'short'}}</span>
+              </div>
+            }
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

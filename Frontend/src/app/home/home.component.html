@@ -1,0 +1,138 @@
+<div class="home-page">
+  <nav class="navbar">
+    <div class="nav-brand">
+      <mat-icon>apartment</mat-icon>
+      <span>SecureGate</span>
+    </div>
+    <div class="nav-links">
+      <a routerLink="/login" [queryParams]="{role: 'resident'}" mat-flat-button color="primary">Resident Login</a>
+      <a routerLink="/login" [queryParams]="{role: 'security'}" mat-flat-button color="primary">Security Login</a>
+      <a routerLink="/login" [queryParams]="{role: 'admin'}" mat-flat-button color="primary">Admin Login</a>
+      <a routerLink="/signup" mat-flat-button color="accent">Register</a>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-content">
+      <h1>Visitor & Parcel Management<br>for Gated Communities</h1>
+      <p>A complete solution to manage visitor entries, parcel deliveries, and resident notifications efficiently and securely.</p>
+      <div class="hero-btns">
+        <a routerLink="/signup" mat-flat-button color="primary" class="btn-lg">Get Started</a>
+        <a href="#how-it-works" mat-stroked-button color="primary" class="btn-lg">Learn More</a>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="visual-card">
+        <mat-icon>apartment</mat-icon>
+        <div class="visual-text">
+          <span class="v-title">Gated Community</span>
+          <span class="v-sub">Secure & Smart</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="how-it-works" id="how-it-works">
+    <h2>How It Works</h2>
+    <p class="section-desc">Simple 6-step process for visitor and parcel management</p>
+    <div class="steps-grid">
+      <div class="step animate-step">
+        <div class="step-icon">
+          <mat-icon>person_add</mat-icon>
+        </div>
+        <h4>Visitor Arrives</h4>
+        <p>Security guard logs visitor details at the gate including name, purpose, and ID</p>
+      </div>
+      <div class="step animate-step">
+        <div class="step-icon">
+          <mat-icon>notifications_active</mat-icon>
+        </div>
+        <h4>Resident Notified</h4>
+        <p>Resident receives instant notification about the visitor waiting at gate</p>
+      </div>
+      <div class="step animate-step">
+        <div class="step-icon">
+          <mat-icon>thumb_up</mat-icon>
+        </div>
+        <h4>Approval</h4>
+        <p>Resident approves or rejects the visitor from their portal</p>
+      </div>
+      <div class="step animate-step">
+        <div class="step-icon">
+          <mat-icon>door_front</mat-icon>
+        </div>
+        <h4>Entry Granted</h4>
+        <p>Approved visitor enters the community with logged entry time</p>
+      </div>
+      <div class="step animate-step">
+        <div class="step-icon">
+          <mat-icon>inventory_2</mat-icon>
+        </div>
+        <h4>Parcel Logged</h4>
+        <p>Security logs incoming parcel and notifies the resident instantly</p>
+      </div>
+      <div class="step animate-step">
+        <div class="step-icon">
+          <mat-icon>task_alt</mat-icon>
+        </div>
+        <h4>Parcel Collected</h4>
+        <p>Resident acknowledges pickup and parcel is marked as collected</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <h2>Key Features</h2>
+    <div class="feature-grid">
+      <div class="feature-card">
+        <mat-icon>groups</mat-icon>
+        <h4>Visitor Management</h4>
+        <p>Log, track, and manage all visitors with complete details including photo ID and vehicle information.</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>local_shipping</mat-icon>
+        <h4>Parcel Tracking</h4>
+        <p>Track parcels from arrival to collection. Residents get notified and can acknowledge pickup.</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>notifications_active</mat-icon>
+        <h4>Real-time Notifications</h4>
+        <p>Instant alerts for visitor approvals and parcel arrivals keep everyone informed.</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>admin_panel_settings</mat-icon>
+        <h4>Role-Based Access</h4>
+        <p>Separate portals for Residents, Security Guards, and Administrators with specific permissions.</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>history</mat-icon>
+        <h4>Complete History</h4>
+        <p>Maintain detailed logs of all visitors and parcels for security and reference.</p>
+      </div>
+      <div class="feature-card">
+        <mat-icon>analytics</mat-icon>
+        <h4>Analytics Dashboard</h4>
+        <p>Admins can view reports, statistics, and monitor community activity.</p>
+      </div>
+    </div>
+  </section>
+
+
+
+  <section class="cta">
+    <h2>Ready to Secure Your Community?</h2>
+    <p>Join hundreds of gated communities using SecureGate</p>
+    <a routerLink="/signup" mat-flat-button class="cta-btn">Get Started Free</a>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-brand">
+        <mat-icon>apartment</mat-icon>
+        <span>SecureGate</span>
+      </div>
+      <p>Visitor & Parcel Management System for Gated Communities</p>
+      <p class="copyright">© 2025 SecureGate. All rights reserved.</p>
+    </div>
+  </footer>
+</div>
